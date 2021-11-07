@@ -3,7 +3,7 @@ local ipairs        =   ipairs
 local helpers       =   {}
 
 function helpers.checkWibarForTag(t)
-    t.screen.mywibox.visible = t.barvisible
+    t.screen.statusbar.visible = t.barvisible
 end
 
 function helpers.toggleWibarForTag()
@@ -29,14 +29,14 @@ function helpers.getNextClient(inc)
     local cls = awful.screen.focused().selected_tag:clients()
     local n = #cls
 
-    if not n then return end
-    if n == 1 then return cls[1] end
+    if n == 0 then return nil end
 
     for i=1,n do
         if cls[i] == client.focus then 
             return cls[round(i,n,inc)]
         end
     end
+
     return cls[1]
 end
 
