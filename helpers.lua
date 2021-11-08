@@ -1,4 +1,5 @@
 local awful         =   require("awful")
+local gears         =   require("gears")
 local ipairs        =   ipairs
 local helpers       =   {}
 
@@ -18,12 +19,6 @@ function helpers.run_once(cmd_arr)
     end
 end
 
-local function round(i,n,inc)
-    i = (i+inc) 
-    if i == 0 then i = n
-    elseif i == n+1 then i = 1 end
-    return i
-end
 
 function helpers.getNextClient(inc)
     local cls = awful.screen.focused().selected_tag:clients()
@@ -33,7 +28,7 @@ function helpers.getNextClient(inc)
 
     for i=1,n do
         if cls[i] == client.focus then 
-            return cls[round(i,n,inc)]
+            return cls[gears.math.cycle(n,i+inc)]
         end
     end
 

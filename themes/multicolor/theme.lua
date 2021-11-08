@@ -119,6 +119,43 @@ theme.quake = lain.util.quake({ app = "alacritty",argname = "--title %s",extra =
 
 local markup = lain.util.markup
 
+local layouts = {
+    awful.layout.suit.tile,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.floating,
+    smax,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.magnifier,
+    awful.layout.suit.corner.nw,
+    awful.layout.suit.corner.ne,
+    awful.layout.suit.corner.sw,
+    awful.layout.suit.corner.se,
+    lain.layout.cascade,
+    lain.layout.cascade.tile,
+    lain.layout.centerwork,
+    lain.layout.centerwork.horizontal,
+    lain.layout.termfair,
+    lain.layout.termfair.center,
+}
+
+
+local layoutEntries = {}
+
+for _,l in pairs(layouts) do
+    table.insert(layoutEntries,{ l.name, function()
+        awful.screen.focused().selected_tag.layout = l
+    end})
+end
+
+local layoutBoxMenu = awful.menu({items = layoutEntries})
+
 -- Textclock
 os.setlocale(os.getenv("LANG")) -- to localize the clock
 local clockicon = wibox.widget.imagebox(theme.widget_clock)
@@ -243,6 +280,7 @@ theme.volume.widget:buttons(awful.util.table.join(
 -- Net
 local netdownicon = wibox.widget.imagebox(theme.widget_netdown)
 local netdowninfo = lain.widget.net({
+    notify = "off",
     settings = function()
         widget:set_markup(markup.fontfg(theme.font, "#87af5f", net_now.received .. " "))
     end
@@ -310,6 +348,7 @@ function theme.at_screen_connect(s)
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(my_table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
+                           awful.button({ }, 2, function () layoutBoxMenu:toggle() end),
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))

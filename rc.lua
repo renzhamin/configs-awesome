@@ -127,31 +127,41 @@ awful.util.terminal = terminal
 --awful.util.tagnames = { "", "", "", "", "" }
 awful.layout.suit.tile.left.mirror = true
 
-awful.layout.layouts = {
+local layouts = {
     awful.layout.suit.tile,
-    awful.layout.suit.max,
-    smax,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
     awful.layout.suit.floating,
-    --awful.layout.suit.max.fullscreen,
-    --awful.layout.suit.tile.left,
-    --awful.layout.suit.tile.bottom,
-    --awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.nw,
-    --awful.layout.suit.corner.ne,
-    --awful.layout.suit.corner.sw,
-    --awful.layout.suit.corner.se,
-    --lain.layout.cascade,
-    --lain.layout.cascade.tile,
-    --lain.layout.centerwork,
-    --lain.layout.centerwork.horizontal,
-    --lain.layout.termfair,
-    --lain.layout.termfair.center,
+    smax,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.magnifier,
+    awful.layout.suit.corner.nw,
+    awful.layout.suit.corner.ne,
+    awful.layout.suit.corner.sw,
+    awful.layout.suit.corner.se,
+    lain.layout.cascade,
+    lain.layout.cascade.tile,
+    lain.layout.centerwork,
+    lain.layout.centerwork.horizontal,
+    lain.layout.termfair,
+    lain.layout.termfair.center,
 }
+
+awful.layout.layouts = { layouts[1],layouts[6],layouts[7],layouts[5] }
+
+local layoutEntries = {}
+
+for _,l in pairs(layouts) do
+    table.insert(layoutEntries,{ l.name, function()
+        awful.screen.focused().selected_tag.layout = l
+    end})
+end
 
 awful.util.taglist_buttons = mousebinds.taglist_buttons
 awful.util.tasklist_buttons = mousebinds.tasklist_buttons
@@ -180,8 +190,7 @@ local myawesomemenu = {
 awful.util.mymainmenu = freedesktop.menu.build({
     before = {
         { "Awesome", myawesomemenu },
-        --{ "Atom", "atom" },
-        -- other triads can be put here
+        { "Layouts", layoutEntries },
     },
     after = {
         { "Terminal", terminal },
