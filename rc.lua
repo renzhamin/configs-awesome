@@ -47,7 +47,7 @@ local keys          = require("keymaps")
 local mousebinds    = require("mousebinds")
 local globalkeys    = keys.globalkeys
 
-local smax          = require("singleMax")
+local smax          = require("singlemax")
 
 
 
@@ -215,7 +215,7 @@ awful.screen.connect_for_each_screen(beautiful.at_screen_connect)
 -- {{{ Mouse bindings
 root.buttons(my_table.join(
     awful.button({ }, 1, function () awful.util.mymainmenu:hide() end),
-    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
+    awful.button({ }, 3, function () help.toggleAndAutoHideMenu(10,awful.util.mymainmenu) end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -224,13 +224,12 @@ root.buttons(my_table.join(
 root.keys(globalkeys)
 
 require("rules")
-
 require("signals")
 
 -- Autostart applications
 awful.spawn.with_shell("~/.config/spectrwm/Scripts/autostart.sh")
-local tag3 = screen[1].tags[3]
 
+local tag3 = screen[1].tags[3]
 tag3.barvisible = false
 tag3.layout     = smax
 tag3.gap        = 0

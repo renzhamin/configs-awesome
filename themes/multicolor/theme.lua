@@ -3,6 +3,7 @@ local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
 local dpi   = require("beautiful.xresources").apply_dpi
+local help  = require("helpers")
 
 local os,string = os,string
 local my_table = gears.table 
@@ -125,7 +126,7 @@ local layouts = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.floating,
-    smax,
+    require("singlemax"),
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.fair,
@@ -335,6 +336,8 @@ theme.mpd = lain.widget.mpd({
     end
 })
 
+
+
 function theme.at_screen_connect(s)
     --gears.wallpaper.maximized(wallpaper, s, true)
 
@@ -348,7 +351,8 @@ function theme.at_screen_connect(s)
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(my_table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 2, function () layoutBoxMenu:toggle() end),
+                           awful.button({ }, 2, function () 
+                               help.toggleAndAutoHideMenu(6,layoutBoxMenu)end),
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
