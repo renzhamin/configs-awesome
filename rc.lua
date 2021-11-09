@@ -227,7 +227,7 @@ require("rules")
 require("signals")
 
 -- Autostart applications
-awful.spawn.with_shell("~/.config/spectrwm/Scripts/autostart.sh")
+awful.spawn.with_shell("~/.config/Scripts/autostart.sh")
 
 local tag3 = screen[1].tags[3]
 tag3.barvisible = false
