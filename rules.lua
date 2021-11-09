@@ -22,27 +22,21 @@ awful.rules.rules = {
 
     },
 
-    -- Titlebars
-    { 
-        rule_any = { type = { "dialog","utility" } },
-        properties = { titlebars_enabled = true } 
-    },
 
     -- Floating clients.
     {
         rule_any = {
+            type = { "dialog" },
             instance = {
                 "DTA",  -- Firefox addon DownThemAll.
                 "copyq",  -- Includes session name in class.
+                "Program",
+                "zoom",
             },
             class = {
+                "Gcolor2",
                 "Arandr",
-                "Arcolinux-welcome-app.py",
-                "Blueberry",
-                "Gpick",
                 "Imagewriter",
-                "Font-manager",
-                "Kruler",
                 "Peek",
             },
 
@@ -57,22 +51,10 @@ awful.rules.rules = {
                 "setup",
             }
         }, 
-        properties = { floating = true }
-    },
-
-    -- Floating clients but centered in screen
-    { 
-        rule_any = {
-            class = {
-                "Gcolor*"
-            },
-            instance = {
-                "Program"
-            }
-        },
         properties = { 
-            floating = true,
-            placement = awful.placement.centered
-        }    
+            placement = awful.placement.centered,
+            floating = true, 
+            titlebars_enabled = true,
+        }
     }
 }
