@@ -92,7 +92,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 for i,t in pairs(root.tags()) do
-    t.barvisible = true
+    t.statusbarvisible = true
 end
 
 tag.connect_signal("property::selected",require("helpers").checkWibarForTag)

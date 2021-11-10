@@ -12,9 +12,9 @@ local theme                                     = {}
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
 theme.wallpaper                                 = theme.confdir .. "/wallpaper.jpg"
 --theme.wallpaper                                 = "/usr/share/backgrounds/arcolinux/arco-wallpaper.jpg"
-theme.font                                      = "Noto Sans Regular 11"
-theme.hotkeys_font                              = "FreeSans 14"
-theme.hotkeys_description_font                  = "Cantarell 16"
+theme.font                                      = "Noto Sans Regular 10"
+theme.hotkeys_font                              = "FreeSans 13"
+theme.hotkeys_description_font                  = "Cantarell 14"
 --theme.bg_normal                                 = "#141F22"
 theme.bg_normal                                 = "#001520"
 --theme.bg_normal                                 = "#000000"
@@ -76,7 +76,7 @@ theme.widget_vol                                = theme.confdir .. "/icons/spkr.
 ----------------------------------------------------------------------------------------
 
 ---- Layout ---
-theme.useless_gap                               = 2
+theme.useless_gap                               = 1
 theme.layout_tile                               = theme.confdir .. "/icons/tile.png"
 theme.layout_tilegaps                           = theme.confdir .. "/icons/tilegaps.png"
 theme.layout_tileleft                           = theme.confdir .. "/icons/tileleft.png"
@@ -363,7 +363,7 @@ function theme.at_screen_connect(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
     -- Create the wibox
-    s.statusbar = awful.wibar({ position = "top", screen = s, height = dpi(23), bg = theme.bg_normal, fg = theme.fg_normal })
+    s.statusbar = awful.wibar({ position = "top", screen = s, height = dpi(22), bg = theme.bg_normal, fg = theme.fg_normal })
 
     s.systray = wibox.widget.systray()
     s.systray.visible = true

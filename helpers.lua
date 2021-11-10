@@ -4,12 +4,12 @@ local ipairs        =   ipairs
 local helpers       =   {}
 
 function helpers.checkWibarForTag(t)
-    t.screen.statusbar.visible = t.barvisible
+    t.screen.statusbar.visible = t.statusbarvisible
 end
 
 function helpers.toggleWibarForTag()
     local t = awful.screen.focused().selected_tag
-    t.barvisible = not t.barvisible
+    t.statusbarvisible = not t.statusbarvisible
     helpers.checkWibarForTag(t)
 end
 
