@@ -3,6 +3,7 @@ local string, os = string, os
 
 local awful             = require("awful")
                           require("awful.autofocus")
+local gears             = require("gears")                          
 local beautiful         = require("beautiful")
 local naughty           = require("naughty")
 --local menubar         = require("menubar")
@@ -15,7 +16,7 @@ local myhotkey = hotkeys_popup.new({
     width = 1360, height = 740,
     group_margin = 25
 })
-local my_table          = require("gears.table")
+local my_table          = gears.table
 local help              = require("helpers")
 local focusNext         = help.focusNext
 local toggleWibarForTag = help.toggleWibarForTag
@@ -42,6 +43,13 @@ local keymaps = {}
 
 
 keymaps.globalkeys = my_table.join(
+
+    awful.key(
+        {Mod},"F5",function()
+            gears.wallpaper.maximized(beautiful.wallpaper,awful.screen.focused())
+        end,
+        {description="redraw wallpaper", group="Awesome"}
+    ),
 
 --- Client ----
     awful.key(
@@ -89,7 +97,7 @@ keymaps.globalkeys = my_table.join(
     ),
 
     awful.key(
-        {Mod,Shift},"k",function()
+        {Mod},"F8",function()
             awful.spawn("keepassxc") end,
         {description="KeepassXC",group="Launcher"}
     ),
@@ -458,18 +466,18 @@ keymaps.globalkeys = my_table.join(
 
     awful.key(
 		{Mod,Shift},"k", function()
-			awful.client.swap.byidx( -1) end,
+			awful.client.swap.byidx(-1) end,
         {description="swap with previous client by index",group="Client"}
 	),
 
     awful.key(
-		{Mod,Control},"j", function()
+		{Mod},"]", function()
 			awful.screen.focus_relative( 1) end,
        {description="focus the next screen",group="Screen"}
 	),
 
     awful.key(
-		{Mod,Control},"k", function()
+		{Mod},"[", function()
 			awful.screen.focus_relative(-1) end,
         {description="focus the previous screen",group="Screen"}
 	),

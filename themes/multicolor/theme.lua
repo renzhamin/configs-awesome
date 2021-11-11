@@ -10,8 +10,7 @@ local my_table = gears.table
 
 local theme                                     = {}
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
-theme.wallpaper                                 = theme.confdir .. "/wallpaper.jpg"
---theme.wallpaper                                 = "/usr/share/backgrounds/arcolinux/arco-wallpaper.jpg"
+theme.wallpaper                                 = os.getenv("HOME") .. "/Pictures/Backgrounds/nature/Moonrise-among-Stars.jpeg"
 theme.font                                      = "Noto Sans Regular 10"
 theme.hotkeys_font                              = "FreeSans 13"
 theme.hotkeys_description_font                  = "Cantarell 14"
@@ -187,39 +186,6 @@ theme.weather = lain.widget.weather({
     end
 })
 
--- / fs
---[[ commented because it needs Gio/Glib >= 2.54
-local fsicon = wibox.widget.imagebox(theme.widget_fs)
-theme.fs = lain.widget.fs({
-    notification_preset = { font = "Noto Sans Mono Medium 10", fg = theme.fg_normal },
-    settings  = function()
-        widget:set_markup(markup.fontfg(theme.font, "#80d9d8", string.format("%.1f", fs_now["/"].used) .. "% "))
-    end
-})
---]]
-
--- Mail IMAP check
---[[ commented because it needs to be set before use
-local mailicon = wibox.widget.imagebox()
-theme.mail = lain.widget.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
-    settings = function()
-        if mailcount > 0 then
-            mailicon:set_image(theme.widget_mail)
-            widget:set_markup(markup.fontfg(theme.font, "#cccccc", mailcount .. " "))
-        else
-            widget:set_text("")
-            --mailicon:set_image() -- not working in 4.0
-            mailicon._private.image = nil
-            mailicon:emit_signal("widget::redraw_needed")
-            mailicon:emit_signal("widget::layout_changed")
-        end
-    end
-})
---]]
 
 -- CPU
 local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
@@ -339,10 +305,14 @@ theme.mpd = lain.widget.mpd({
 
 
 function theme.at_screen_connect(s)
-    --gears.wallpaper.maximized(wallpaper, s, true)
+    gears.wallpaper.maximized(theme.wallpaper, s, true)
 
     -- Tags
     awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
+
+    for _,t in pairs(s.tags) do
+        t.statusbarvisible = true
+    end
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()

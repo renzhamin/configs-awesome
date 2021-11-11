@@ -4,6 +4,7 @@ local ipairs        =   ipairs
 local helpers       =   {}
 
 function helpers.checkWibarForTag(t)
+    if not t.screen or not t.screen.statusbar then return end
     t.screen.statusbar.visible = t.statusbarvisible
 end
 

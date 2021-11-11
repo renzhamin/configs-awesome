@@ -1,14 +1,22 @@
 local awesome,client,screen     = awesome,client,screen
 local awful                     = require("awful")
 local beautiful                 = require("beautiful")
-local my_table                  = require("gears.table")
+local gears                     = require("gears")
+local my_table                  = gears.table
 local wibox                     = require("wibox")
 local dpi                       = require("beautiful.xresources").apply_dpi
+local naughty                   = require("naughty")
 
 screen.connect_signal("property::geometry", function(s)
     -- Wallpaper
-    awful.spawn("nitrogen --restore")
+--    awful.spawn("nitrogen --restore")
 end)
+
+--screen.connect_signal("added", function(s)
+--  -- beautiful.at_screen_connect(s) 
+--  gears.wallpaper.maximized(beautiful.wallpaper,s,true)
+--  naughty.notify({text = "new screen", timeout = 3})
+--end)
 
 -- No borders when rearranging only 1 non-floating or maximized client
 screen.connect_signal("arrange", function (s)
@@ -90,9 +98,5 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
-
-for i,t in pairs(root.tags()) do
-    t.statusbarvisible = true
-end
 
 tag.connect_signal("property::selected",require("helpers").checkWibarForTag)
