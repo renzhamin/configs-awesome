@@ -13,7 +13,7 @@ local lain          = require("lain")
 local freedesktop   = require("freedesktop")
 
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local my_table      = gears.table -- 4.{0,1} compatibility
+local gtable        = gears.table -- 4.{0,1} compatibility
 
 local dpi           = require("beautiful.xresources").apply_dpi
 
@@ -40,6 +40,7 @@ do
 
         naughty.notify({
             preset = naughty.config.presets.critical,
+            timeout = 10,
             title = "Oops, an error happened!",
             text = tostring(err) 
         })
@@ -107,7 +108,7 @@ awful.util.mymainmenu = freedesktop.menu.build({
 
 awful.screen.connect_for_each_screen(beautiful.at_screen_connect)
 
-root.buttons(my_table.join(
+root.buttons(gtable.join(
     awful.button({ }, 1, function () awful.util.mymainmenu:hide() end),
     awful.button({ }, 3, function () help.toggleAndAutoHideMenu(10,awful.util.mymainmenu) end),
     awful.button({ }, 5, awful.tag.viewnext),

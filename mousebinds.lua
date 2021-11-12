@@ -1,17 +1,17 @@
 local awful         = require("awful")
-local my_table      = require("gears.table")
+local gtable      = require("gears.table")
 local modkey        = "Mod4"
 local mousebinds    = {}
 
-mousebinds.taglist_buttons = my_table.join(
+mousebinds.taglist_buttons = gtable.join(
     awful.button({ }, 1, function(t) t:view_only() end),
     awful.button({ modkey }, 1, function(t)
         if client.focus then
             client.focus:move_to_tag(t)
         end
     end),
-    awful.button({ }, 3, awful.tag.viewtoggle),
-    awful.button({ modkey }, 3, function(t)
+    awful.button({ }, 2, awful.tag.viewtoggle),
+    awful.button({ }, 3, function(t)
         if client.focus then
             client.focus:toggle_tag(t)
         end
@@ -20,7 +20,7 @@ mousebinds.taglist_buttons = my_table.join(
     awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end)
 )
 
-mousebinds.tasklist_buttons = my_table.join(
+mousebinds.tasklist_buttons = gtable.join(
     awful.button({ }, 1, function (c)
         if c == client.focus then
             c.minimized = true
@@ -60,7 +60,7 @@ mousebinds.tasklist_buttons = my_table.join(
     awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
 )
 
-mousebinds.clientbuttons = my_table.join(
+mousebinds.clientbuttons = gtable.join(
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
     end),

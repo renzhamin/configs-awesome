@@ -16,7 +16,8 @@ local myhotkey = hotkeys_popup.new({
     width = 1360, height = 740,
     group_margin = 25
 })
-local my_table          = gears.table
+
+local gtable            = gears.table
 local help              = require("helpers")
 local focusNext         = help.focusNext
 local toggleWibarForTag = help.toggleWibarForTag
@@ -35,32 +36,25 @@ local screenshot        = "flameshot gui"
 local filemanager       = "pcmanfm"
 local terminal          = "alacritty"
 
-local brightnessUp      = "light -A 5"
-local brightnessDown    = "light -D 5"
+local brightnessUpCmd      = "light -A 5"
+local brightnessDown       = "light -D 5"
 
 
 local keymaps = {}
 
 
-keymaps.globalkeys = my_table.join(
-
-    awful.key(
-        {Mod},"F5",function()
-            gears.wallpaper.maximized(beautiful.wallpaper,awful.screen.focused())
-        end,
-        {description="redraw wallpaper", group="Awesome"}
-    ),
+keymaps.globalkeys = gtable.join(
 
 --- Client ----
     awful.key(
         {Mod},"Tab", function()
             focusNext(-1) end,
-        {description="Cycle Windows in tag",group="Client"}
+        {description="cycle clients in tag",group="Client"}
     ),
     awful.key(
         {Mod,Shift},"Tab", function()
             focusNext(1) end,
-        {description="Cycle Windows in tag",group="Client"}
+        {description="cycle clients in tag",group="Client"}
     ),
 
 --------------
@@ -124,7 +118,7 @@ keymaps.globalkeys = my_table.join(
 
 --- Prompt Scripts ----
     awful.key(
-        {Mod,Control},"k",function()
+        {Mod},"F4",function()
         awful.spawn.with_shell(prompt_scripts_dir .. "killUserProcess") end,
         {description="Kill Script",group="Prompt Script"}
     ),
@@ -187,7 +181,7 @@ keymaps.globalkeys = my_table.join(
 ----brightness----
     awful.key(
         {Mod,Control},"equal",function()
-        awful.spawn(brightnessUp) end,
+        awful.spawn(brightnessUpCmd) end,
         {description="Brightness Up",group="Control"}
     ),
     awful.key(
@@ -229,6 +223,13 @@ keymaps.globalkeys = my_table.join(
 -----------------
 
 ----awesome----
+    awful.key(
+        {Mod},"F5",function()
+            gears.wallpaper.maximized(beautiful.wallpaper,awful.screen.focused())
+        end,
+        {description="redraw wallpaper", group="Awesome"}
+    ),
+
 
     awful.key(
 		{Mod},"q",
@@ -252,13 +253,13 @@ keymaps.globalkeys = my_table.join(
     awful.key(
         {Mod,Shift},"F1",function()
             hotkeys_popup.show_help() end,
-        {description="show help",group="Awesome"}
+        {description="default hotkeys widget",group="Awesome"}
     ),
 
     awful.key(
         {Mod},"F2",function()
             awful.spawn.with_shell(awm_scripts_dir.. "search_keys_awesome") end,
-        {description="show help",group="Awesome"}
+        {description="search keybindings",group="Awesome"}
     ),
 
 
@@ -296,7 +297,7 @@ keymaps.globalkeys = my_table.join(
 
 -------tag-----
     awful.key(
-        {Alt},"Escape",
+        {Mod},"Escape",
             awful.tag.history.restore,
         {description="go back",group="Tag"}
     ),
@@ -329,44 +330,33 @@ keymaps.globalkeys = my_table.join(
 
     -- On the fly useless gaps change
     awful.key(
-		{Mod,Alt}, "equal",function()
+		{Mod,Alt},"k",function()
 			lain.util.useless_gaps_resize(1) end,
         {description="increment useless gaps",group="Tag"}
 	),
 
     awful.key(
-		{Mod,Alt}, "minus",function()
+		{Mod,Alt}, "j",function()
 			lain.util.useless_gaps_resize(-1) end,
         {description="decrement useless gaps",group="Tag"}
 	),
 
     -- Dynamic tagging
     awful.key(
-	    {Mod,Shift}, "n",function()
+	    {Mod,Alt},"n",function()
 			lain.util.add_tag() end,
         {description="add new tag",group="Tag"}
 	),
 
     awful.key(
-		{Mod,Control}, "r",function()
+		{Mod,Alt},"r",function()
 			lain.util.rename_tag() end,
         {description="rename tag",group="Tag"}
 	),
 
-    awful.key(
-		{Mod,Shift}, "Left",function()
-			lain.util.move_tag(-1) end,
-        {description="move tag to the left",group="Tag"}
-	),
 
     awful.key(
-		{ Mod,Shift}, "Right",function()
-			lain.util.move_tag(1) end,
-        {description="move tag to the right",group="Tag"}
-	),
-
-    awful.key(
-		{ Mod,Shift}, "y",function()
+		{Mod,Alt},"d",function()
 			lain.util.delete_tag() end,
         {description="delete tag",group="Tag"}
 	),
@@ -376,19 +366,6 @@ keymaps.globalkeys = my_table.join(
 ------------------------------------------------------------
 
 -------------client--------
-
-    -- Default client focus
-    awful.key(
-        {Alt},"j", function()
-            awful.client.focus.byidx( 1) end,
-        {description="focus next by index",group="Client"}
-    ),
-
-    awful.key(
-		{Alt},"k",function()
-            awful.client.focus.byidx(-1) end,
-        {description="focus previous by index",group="Client"}
-	),
 
     -- By direction client focus
     awful.key(
@@ -424,51 +401,32 @@ keymaps.globalkeys = my_table.join(
 	),
 
 
-
-        -- By direction client focus with arrows
+--- By direction swapping
     awful.key(
-		{Control,Mod},"Down", function()
-            awful.client.focus.global_bydirection("down")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus down",group="Client"}
+		{Mod,Shift},"l", function()
+			awful.client.swap.bydirection("right") end,
+        {description="swap right",group="Client"}
 	),
 
-    awful.key(
-		{Control,Mod},"Up", function()
-            awful.client.focus.global_bydirection("up")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus up",group="Client"}
-	),
 
     awful.key(
-		{Control,Mod},"Left", function()
-        awful.client.focus.global_bydirection("left")
-        if client.focus then client.focus:raise() end
-    end,
-    {description="focus left",group="Client"}
-	),
-
-    awful.key(
-		{Control,Mod},"Right",function()
-            awful.client.focus.global_bydirection("right")
-            if client.focus then client.focus:raise() end
-        end,
-        {description="focus right",group="Client"}
+		{Mod,Shift},"h", function()
+			awful.client.swap.bydirection("left") end,
+        {description="swap left",group="Client"}
 	),
 
     awful.key(
 		{Mod,Shift},"j", function()
-			awful.client.swap.byidx(1) end,
-        {description="swap with next client by index",group="Client"}
+			awful.client.swap.bydirection("down") end,
+        {description="swap down",group="Client"}
 	),
 
     awful.key(
 		{Mod,Shift},"k", function()
-			awful.client.swap.byidx(-1) end,
-        {description="swap with previous client by index",group="Client"}
+			awful.client.swap.bydirection("up") end,
+        {description="swap up",group="Client"}
 	),
+
 
     awful.key(
 		{Mod},"]", function()
@@ -498,39 +456,52 @@ keymaps.globalkeys = my_table.join(
         {description="go back",group="Client"}
 	),
 
-
     awful.key(
-		{Mod,Control},"l",     function()
-			awful.tag.incmwfact( 0.05) end,
+        {Mod,Shift},"n",function()
+            local c = awful.client.restore()
+            -- Focus restored client
+            if c then
+                client.focus = c
+                c:raise()
+            end
+        end,
+        {description="restore minimized",group="Client"}
+	),
+
+
+-----layout-------
+    awful.key(
+		{Mod,Alt},"l",     function()
+			awful.tag.incmwfact(0.05) end,
         {description="increase master width factor",group="Layout"}
 	),
 
     awful.key(
-		{Mod,Control},"h",     function()
+		{Mod,Alt},"h",     function()
 			awful.tag.incmwfact(-0.05) end,
         {description="decrease master width factor",group="Layout"}
 	),
 
     awful.key(
-		{Mod,Shift},"h",     function()
-			awful.tag.incnmaster( 1, nil, true) end,
+		{Mod,Shift},".",     function()
+			awful.tag.incnmaster(1, nil, true) end,
         {description="increase the number of master clients",group="Layout"}
 	),
 
     awful.key(
-		{Mod,Shift},"l",     function()
+		{Mod,Shift},",",     function()
 			awful.tag.incnmaster(-1, nil, true) end,
         {description="decrease the number of master clients",group="Layout"}
 	),
 
     awful.key(
-		{Mod,Control},"h",     function()
+		{Mod},".",     function()
 			awful.tag.incncol( 1, nil, true) end,
         {description="increase the number of columns",group="Layout"}
 	),
 
     awful.key(
-		{Mod,Control},"l",     function()
+		{Mod},",",     function()
 			awful.tag.incncol(-1, nil, true) end,
         {description="decrease the number of columns",group="Layout"}
 	),
@@ -549,18 +520,6 @@ keymaps.globalkeys = my_table.join(
 
 
     awful.key(
-        {Mod,Control},"n",function()
-            local c = awful.client.restore()
-            -- Focus restored client
-            if c then
-                client.focus = c
-                c:raise()
-            end
-        end,
-        {description="restore minimized",group="Client"}
-	),
-
-    awful.key(
         {Alt},"x",function()
             awful.prompt.run {
                 prompt       = "Run Lua code: ",
@@ -573,7 +532,7 @@ keymaps.globalkeys = my_table.join(
     )
 )
 
-keymaps.clientkeys = my_table.join(
+keymaps.clientkeys = gtable.join(
     awful.key(
 		{Alt,Shift},"m",
             lain.util.magnify_client,
@@ -653,7 +612,7 @@ for i = 1, 9 do
     local key = i+9
     if i==9 then key = 49 end
 
-    keymaps.globalkeys = my_table.join(keymaps.globalkeys,
+    keymaps.globalkeys = gtable.join(keymaps.globalkeys,
         -- View tag only.
         awful.key(
             { Alt },"#" .. key,function()

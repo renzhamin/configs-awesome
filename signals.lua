@@ -2,7 +2,7 @@ local awesome,client,screen     = awesome,client,screen
 local awful                     = require("awful")
 local beautiful                 = require("beautiful")
 local gears                     = require("gears")
-local my_table                  = gears.table
+local gtable                    = gears.table
 local wibox                     = require("wibox")
 local dpi                       = require("beautiful.xresources").apply_dpi
 local naughty                   = require("naughty")
@@ -54,7 +54,7 @@ client.connect_signal("request::titlebars", function(c)
 
     -- Default
     -- buttons for the titlebar
-    local buttons = my_table.join(
+    local buttons = gtable.join(
         awful.button({ }, 1, function()
             c:emit_signal("request::activate", "titlebar", {raise = true})
             awful.mouse.client.move(c)
