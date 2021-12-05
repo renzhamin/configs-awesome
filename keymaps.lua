@@ -9,6 +9,8 @@ local naughty           = require("naughty")
 --local menubar         = require("menubar")
 
 local lain              = require("lain")
+-- local internet          = "Ethernet"
+local internet          = "iut"
 
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
@@ -204,13 +206,13 @@ keymaps.globalkeys = gtable.join(
 
     awful.key(
         {Mod,Control},"e",function()
-        awful.spawn.with_shell("nmcli c down Ethernet") end,
+        awful.spawn.with_shell("nmcli c down " .. internet) end,
         {description="Ethernet Off",group="Control"}
     ),
 
     awful.key(
         {Mod,Control,Shift},"e",function()
-        awful.spawn.with_shell("nmcli c up Ethernet") end,
+        awful.spawn.with_shell("nmcli c up " .. internet) end,
         {description="Ethernet on",group="Control"}
     ),
 
@@ -223,6 +225,14 @@ keymaps.globalkeys = gtable.join(
 -----------------
 
 ----awesome----
+    awful.key(
+        {Control,Alt},"Delete",function()
+            awful.spawn.with_shell("dm-tool switch-to-greeter")
+        end,
+        {description="Lock", group="Awesome"}
+    ),
+
+
     awful.key(
         {Mod},"F5",function()
             gears.wallpaper.maximized(beautiful.wallpaper,awful.screen.focused())
