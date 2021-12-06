@@ -120,7 +120,7 @@ root.keys(globalkeys)
 require("rules")
 require("signals")
 
-awful.spawn.with_shell("~/.config/Scripts/autostart.sh")
+awful.spawn.with_shell("sh ~/.config/Scripts/autostart.sh")
 
 local tag3 = screen[1].tags[3]
 tag3.statusbarvisible = false

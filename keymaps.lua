@@ -30,8 +30,10 @@ local Control       = "Control"
 local Shift         = "Shift"
 
 local scripts_dir          = "~/.config/Scripts/"
+local scripts_cmd          = "sh " .. scripts_dir
 local prompt_scripts_dir   = scripts_dir .. "prompt_scripts/"
-local awm_scripts_dir      = "~/.config/awesome/scripts/"
+local prompt_scripts_cmd   = "sh " .. prompt_scripts_dir
+local awm_scripts_cmd      = "sh ~/.config/awesome/scripts/"
 
 local browser           = "brave"
 local screenshot        = "flameshot gui"
@@ -121,13 +123,13 @@ keymaps.globalkeys = gtable.join(
 --- Prompt Scripts ----
     awful.key(
         {Mod},"F4",function()
-        awful.spawn.with_shell(prompt_scripts_dir .. "killUserProcess") end,
+        awful.spawn.with_shell(prompt_scripts_cmd .. "killUserProcess.sh") end,
         {description="Kill Script",group="Prompt Script"}
     ),
 
     awful.key(
         {Mod,Control},"v",function()
-        awful.spawn.with_shell(prompt_scripts_dir .. "setVolume") end,
+        awful.spawn.with_shell(prompt_scripts_cmd .. "setVolume.sh") end,
         {description="Set Volume",group="Prompt Script"}
     ),
 
@@ -164,19 +166,19 @@ keymaps.globalkeys = gtable.join(
 ----appvolume-----
     awful.key(
         {Shift},"XF86AudioRaiseVolume",function()
-        awful.spawn.with_shell(scripts_dir .. "changePerAppVolume.sh +5%") end,
+        awful.spawn.with_shell(scripts_cmd .. "changePerAppVolume.sh +5%") end,
         {description="Increase App Volume",group="Control"}
     ),
 
     awful.key(
         {Shift},"XF86AudioLowerVolume",function()
-        awful.spawn.with_shell(scripts_dir .. "changePerAppVolume.sh -5%") end,
+        awful.spawn.with_shell(scripts_cmd .. "changePerAppVolume.sh -5%") end,
         {description="Decrease App Volume",group="Control"}
     ),
 
     awful.key(
         {Shift},"XF86AudioMute",function()
-        awful.spawn.with_shell(scripts_dir .. "togglePerAppMute.sh") end,
+        awful.spawn.with_shell(scripts_cmd .. "togglePerAppMute.sh") end,
         {description="Toggle App Mute",group="Control"}
     ),
 
@@ -218,7 +220,7 @@ keymaps.globalkeys = gtable.join(
 
     awful.key(
         {Mod,Control}, "p", function() 
-            awful.spawn.with_shell("$HOME/.config/awesome/scripts/picom-toggle.sh") end,
+            awful.spawn.with_shell(awm_scripts_cmd .. "picom-toggle.sh") end,
         {description="Picom toggle",group="Control"}
     ),
 
@@ -268,7 +270,7 @@ keymaps.globalkeys = gtable.join(
 
     awful.key(
         {Mod},"F2",function()
-            awful.spawn.with_shell(awm_scripts_dir.. "search_keys_awesome") end,
+            awful.spawn.with_shell(awm_scripts_cmd .. "search_keys_awesome.sh") end,
         {description="search keybindings",group="Awesome"}
     ),
 
