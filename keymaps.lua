@@ -250,8 +250,10 @@ keymaps.globalkeys = gtable.join(
 	),
 
     awful.key(
-		{Mod,Shift},"q",
-            awesome.quit,
+		{Mod,Shift},"q", function()
+            awesome.quit();
+            awful.spawn.with_shell("loginctl terminate-session $XDG_SESSION_ID")
+        end,
         {description="quit awesome",group="Awesome"}
 	),
 
