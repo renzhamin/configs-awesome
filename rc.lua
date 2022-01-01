@@ -48,17 +48,7 @@ do
     end)
 end
 
-
-local themes = {
-    "multicolor",
-    "powerarrow", 
-    "powerarrow-blue",
-    "blackburn",
-}
-
-local chosen_theme = themes[1]
-
-local theme_path = string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme)
+local theme_path = string.format("%s/.config/awesome/theme/theme.lua", os.getenv("HOME"))
 beautiful.init(theme_path)
 
 

@@ -9,8 +9,8 @@ local os,string = os,string
 local my_table = gears.table 
 
 local theme                                     = {}
-theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
-theme.wallpaper                                 = os.getenv("HOME") .. "/Pictures/Backgrounds/nature/Moonrise-among-Stars.jpeg"
+theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/theme"
+theme.wallpaper                                 = os.getenv("HOME") .. "/.config/wallpaper.jpeg"
 theme.font                                      = "Noto Sans Regular 10"
 theme.hotkeys_font                              = "FreeSans 13"
 theme.hotkeys_description_font                  = "Cantarell 14"

@@ -1,6 +1,6 @@
 [submodule "lain"]
 	path = lain
-	url = git@github.com:gr523/lain.git
+	url = https://github.com/lcpz/lain.git
 [submodule "freedesktop"]
 	path = freedesktop
 	url = https://github.com/lcpz/awesome-freedesktop.git
