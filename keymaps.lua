@@ -194,6 +194,8 @@ keymaps.globalkeys = gtable.join(
         {description="Brightness Down",group="Control"}
     ),
 
+--- network
+
     awful.key(
         {Mod,Control},"n",function()
         awful.spawn("networkmanager_dmenu") end,
@@ -223,6 +225,20 @@ keymaps.globalkeys = gtable.join(
             awful.spawn.with_shell(awm_scripts_cmd .. "picom-toggle.sh") end,
         {description="Picom toggle",group="Control"}
     ),
+
+    awful.key(
+        {Mod},"[",function()
+            awful.spawn.with_shell("adb shell svc data disable") end,
+        {description="Mobile Data On",group="Control"}
+    ),
+
+    awful.key(
+        {Mod},"]",function()
+            awful.spawn.with_shell("adb shell svc data enable") end,
+        {description="Mobile Data On",group="Control"}
+    ),
+
+
 
 -----------------
 
