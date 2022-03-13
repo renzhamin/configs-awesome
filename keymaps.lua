@@ -43,6 +43,8 @@ local terminal          = "alacritty"
 local brightnessUpCmd      = "light -A 5"
 local brightnessDown       = "light -D 5"
 
+local lockCommand          = "light-locker-command -l"
+
 
 local keymaps = {}
 
@@ -245,11 +247,17 @@ keymaps.globalkeys = gtable.join(
 ----awesome----
     awful.key(
         {Control,Alt},"Delete",function()
-            awful.spawn.with_shell("dm-tool switch-to-greeter")
+            awful.spawn.with_shell(lockCommand)
         end,
         {description="Lock", group="Awesome"}
     ),
 
+    awful.key(
+        {Control,Alt,Shift},"Delete",function()
+            awful.spawn.with_shell("systemctl hibernate")
+        end,
+        {description="Hibernate", group="Awesome"}
+    ),
 
     awful.key(
         {Mod},"F5",function()
