@@ -55,4 +55,10 @@ function helpers.focusNext(inc)
     if c then focusClient(c) end
 end
 
+function helpers.getRandomWallpaper()
+    local w = io.popen("ls /usr/share/wallpapers/ | shuf -n 1")
+    return "/usr/share/wallpapers/" .. w:read()
+end
+
+
 return helpers

@@ -40,8 +40,8 @@ local screenshot        = "flameshot gui"
 local filemanager       = "pcmanfm"
 local terminal          = "alacritty"
 
-local brightnessUpCmd      = "light -A 5"
-local brightnessDown       = "light -D 5"
+local brightnessUpCmd      = "brightnessctl -d ${BACKLIGHT_DEVICE} set +5%"
+local brightnessDown       = "brightnessctl -d ${BACKLIGHT_DEVICE} set 5%-"
 
 local lockCommand          = "light-locker-command -l"
 
@@ -135,6 +135,13 @@ keymaps.globalkeys = gtable.join(
         {description="Set Volume",group="Prompt Script"}
     ),
 
+    awful.key(
+        {Mod,Control},"l",function()
+        awful.spawn.with_shell(prompt_scripts_cmd .. "set_brightness.sh") end,
+        {description="Set Brightness",group="Prompt Script"}
+    ),
+
+
 ------------
 
 
@@ -187,12 +194,12 @@ keymaps.globalkeys = gtable.join(
 ----brightness----
     awful.key(
         {Mod,Control},"equal",function()
-        awful.spawn(brightnessUpCmd) end,
+        awful.spawn.with_shell(brightnessUpCmd) end,
         {description="Brightness Up",group="Control"}
     ),
     awful.key(
         {Mod,Control},"minus",function()
-        awful.spawn(brightnessDown) end,
+        awful.spawn.with_shell(brightnessDown) end,
         {description="Brightness Down",group="Control"}
     ),
 
@@ -254,16 +261,16 @@ keymaps.globalkeys = gtable.join(
 
     awful.key(
         {Control,Alt,Shift},"Delete",function()
-            awful.spawn.with_shell("systemctl hibernate")
+            awful.spawn.with_shell("dm-tool switch-to-greeter && systemctl hibernate")
         end,
         {description="Hibernate", group="Awesome"}
     ),
 
     awful.key(
         {Mod},"F5",function()
-            gears.wallpaper.maximized(beautiful.wallpaper,awful.screen.focused())
+            gears.wallpaper.maximized(help.getRandomWallpaper(),awful.screen.focused())
         end,
-        {description="redraw wallpaper", group="Awesome"}
+        {description="draw random wallpaper", group="Awesome"}
     ),
 
 
