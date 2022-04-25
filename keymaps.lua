@@ -10,7 +10,7 @@ local naughty           = require("naughty")
 
 local lain              = require("lain")
 -- local internet          = "Ethernet"
-local internet          = "iut"
+local internet          = os.getenv("INTERNET")
 
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 
@@ -43,7 +43,7 @@ local terminal          = "alacritty"
 local brightnessUpCmd      = "brightnessctl -d ${BACKLIGHT_DEVICE} set +5%"
 local brightnessDown       = "brightnessctl -d ${BACKLIGHT_DEVICE} set 5%-"
 
-local lockCommand          = "light-locker-command -l"
+local lockCommand          = "dm-tool switch-to-greeter"
 
 
 local keymaps = {}
