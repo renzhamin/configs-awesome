@@ -20,6 +20,8 @@ theme.bg_normal                                 = "#001520"
 theme.bg_focus                                  = "#00121B"
 theme.bg_urgent                                 = "#000000"
 theme.fg_normal                                 = "#aaaaaa"
+theme.bat_charging                              = theme.fg_normal
+theme.bat_discharging                           = "af1d18"
 theme.fg_focus                                  = "#ff8c00"
 theme.fg_urgent                                 = "#af1d18"
 theme.fg_minimize                               = "#ffffff"
@@ -39,6 +41,7 @@ theme.tasklist_bg_normal                        = theme.bg_normal
 theme.tasklist_bg_focus                         = theme.bg_focus
 theme.tasklist_plain_task_name                  = false
 theme.tasklist_disable_icon                     = false
+-- theme.tasklist_disable_task_name                = true
 ----------------------------------------------------------------------------------------
 
 --- Right Click Menu
@@ -115,7 +118,7 @@ theme.titlebar_maximized_button_focus_active    = theme.confdir .. "/icons/title
 ----------------------------------------------------------------------------------------
 
 --- Quake Terminal
-theme.quake = lain.util.quake({ app = "alacritty",argname = "--title %s",extra = "--class QuakeDD -o background_opacity=1",  height = 0.2 })
+theme.quake = lain.util.quake({ app = "alacritty",argname = "--title %s",extra = "--class QuakeDD -o window.opacity=1",  height = 0.2 })
 
 local markup = lain.util.markup
 
@@ -174,17 +177,17 @@ mytextclock.font = theme.font
 --})
 
 -- Weather
-local weathericon = wibox.widget.imagebox(theme.widget_weather)
-theme.weather = lain.widget.weather({
-    city_id = 2803138, -- placeholder (Belgium)
-    notification_preset = { font = "Noto Sans Mono Medium 10", fg = theme.fg_normal },
-    weather_na_markup = markup.fontfg(theme.font, "#eca4c4", "N/A "),
-    settings = function()
-        descr = weather_now["weather"][1]["description"]:lower()
-        units = math.floor(weather_now["main"]["temp"])
-        widget:set_markup(markup.fontfg(theme.font, "#eca4c4", descr .. " @ " .. units .. "°C "))
-    end
-})
+-- local weathericon = wibox.widget.imagebox(theme.widget_weather)
+-- theme.weather = lain.widget.weather({
+--     city_id = 2803138, -- placeholder (Belgium)
+--     notification_preset = { font = "Noto Sans Mono Medium 10", fg = theme.fg_normal },
+--     weather_na_markup = markup.fontfg(theme.font, "#eca4c4", "N/A "),
+--     settings = function()
+--         descr = weather_now["weather"][1]["description"]:lower()
+--         units = math.floor(weather_now["main"]["temp"])
+--         widget:set_markup(markup.fontfg(theme.font, "#eca4c4", descr .. " @ " .. units .. "°C "))
+--     end
+-- })
 
 
 -- CPU
@@ -206,10 +209,17 @@ local temp = lain.widget.temp({
 -- Battery
 local baticon = wibox.widget.imagebox(theme.widget_batt)
 local bat = lain.widget.bat({
-    notify = "off",
+--     notify = "off",
+--     timeout = 2,
     settings = function()
         local perc = bat_now.perc ~= "N/A" and bat_now.perc .. "%" or bat_now.perc
-        widget:set_markup(markup.fontfg(theme.font, theme.fg_normal, perc .. " "))
+        local bat_color = theme.bat_charging
+--         if bat_now.status == "Discharging" then
+--             bat_color = theme.bat_discharging
+--         end
+        local status = bat_now.status or "N/A"
+--         naughty.notify({text = status})
+        widget:set_markup(markup.fontfg(theme.font, bat_color, perc .. " "))
     end
 })
 
@@ -267,41 +277,41 @@ local memory = lain.widget.mem({
 })
 
 -- MPD
-local musicplr = "urxvt -title Music -g 130x34-320+16 -e ncmpcpp"
-local mpdicon = wibox.widget.imagebox(theme.widget_music)
-mpdicon:buttons(my_table.join(
-    awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
-    --[[awful.button({ }, 1, function ()
-        awful.spawn.with_shell("mpc prev")
-        theme.mpd.update()
-    end),
-    --]]
-    awful.button({ }, 2, function ()
-        awful.spawn.with_shell("mpc toggle")
-        theme.mpd.update()
-    end),
-    awful.button({ modkey }, 3, function () awful.spawn.with_shell("pkill ncmpcpp") end),
-    awful.button({ }, 3, function ()
-        awful.spawn.with_shell("mpc stop")
-        theme.mpd.update()
-    end)))
-theme.mpd = lain.widget.mpd({
-    settings = function()
-        if mpd_now.state == "play" then
-            artist = " " .. mpd_now.artist .. " "
-            title  = mpd_now.title  .. " "
-            mpdicon:set_image(theme.widget_music_on)
-            widget:set_markup(markup.font(theme.font, markup("#FFFFFF", artist) .. " " .. title))
-        elseif mpd_now.state == "pause" then
-            widget:set_markup(markup.font(theme.font, " mpd paused "))
-            mpdicon:set_image(theme.widget_music_pause)
-        else
-            widget:set_text("")
-            mpdicon:set_image(theme.widget_music)
-        end
-    end
-})
-
+-- local musicplr = "urxvt -title Music -g 130x34-320+16 -e ncmpcpp"
+-- local mpdicon = wibox.widget.imagebox(theme.widget_music)
+-- mpdicon:buttons(my_table.join(
+--     awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
+--     --[[awful.button({ }, 1, function ()
+--         awful.spawn.with_shell("mpc prev")
+--         theme.mpd.update()
+--     end),
+--     --]]
+--     awful.button({ }, 2, function ()
+--         awful.spawn.with_shell("mpc toggle")
+--         theme.mpd.update()
+--     end),
+--     awful.button({ modkey }, 3, function () awful.spawn.with_shell("pkill ncmpcpp") end),
+--     awful.button({ }, 3, function ()
+--         awful.spawn.with_shell("mpc stop")
+--         theme.mpd.update()
+--     end)))
+-- theme.mpd = lain.widget.mpd({
+--     settings = function()
+--         if mpd_now.state == "play" then
+--             artist = " " .. mpd_now.artist .. " "
+--             title  = mpd_now.title  .. " "
+--             mpdicon:set_image(theme.widget_music_on)
+--             widget:set_markup(markup.font(theme.font, markup("#FFFFFF", artist) .. " " .. title))
+--         elseif mpd_now.state == "pause" then
+--             widget:set_markup(markup.font(theme.font, " mpd paused "))
+--             mpdicon:set_image(theme.widget_music_pause)
+--         else
+--             widget:set_text("")
+--             mpdicon:set_image(theme.widget_music)
+--         end
+--     end
+-- })
+-- 
 
 
 function theme.at_screen_connect(s)
