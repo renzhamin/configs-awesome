@@ -204,6 +204,11 @@ keymaps.globalkeys = gtable.join(
     ),
 
 --- network
+    awful.key(
+        {Mod,Alt},"v",function()
+        awful.spawn.with_shell(scripts_cmd .. "toggleProtonVpn.sh") end,
+        {description="Toggle ProtonVPN",group="Control"}
+    ),
 
     awful.key(
         {Mod,Control},"n",function()
