@@ -9,7 +9,6 @@ local naughty   = require("naughty")
 --local menubar         = require("menubar")
 
 local lain     = require("lain")
--- local internet          = "Ethernet"
 local internet = os.getenv("INTERNET")
 
 local hotkeys_popup = require("awful.hotkeys_popup").widget
@@ -259,14 +258,14 @@ keymaps.globalkeys = gtable.join(
         { Mod, Control }, "e", function()
             awful.spawn.with_shell("nmcli c down " .. internet)
         end,
-        { description = "Ethernet Off", group = "Control" }
+        { description = "Internet Off", group = "Control" }
     ),
 
     awful.key(
         { Mod, Control, Shift }, "e", function()
             awful.spawn.with_shell("nmcli c up " .. internet)
         end,
-        { description = "Ethernet on", group = "Control" }
+        { description = "Internet on", group = "Control" }
     ),
 
     awful.key(
