@@ -3,30 +3,31 @@ local string, os = string, os
 
 local awful = require("awful")
 require("awful.autofocus")
-local gears     = require("gears")
-local beautiful = require("beautiful")
-local naughty   = require("naughty")
+local gears              = require("gears")
+local beautiful          = require("beautiful")
+local naughty            = require("naughty")
 --local menubar         = require("menubar")
 
-local lain     = require("lain")
-local internet = os.getenv("INTERNET")
+local lain               = require("lain")
+local internet           = os.getenv("INTERNET")
 
-local hotkeys_popup = require("awful.hotkeys_popup").widget
+local hotkeys_popup      = require("awful.hotkeys_popup").widget
 
-local myhotkey = hotkeys_popup.new({
-    width = 1360, height = 740,
+local myhotkey           = hotkeys_popup.new({
+    width = 1360,
+    height = 740,
     group_margin = 25
 })
 
-local gtable            = gears.table
-local help              = require("helpers")
-local focusNext         = help.focusNext
-local toggleWibarForTag = help.toggleWibarForTag
+local gtable             = gears.table
+local help               = require("helpers")
+local focusNext          = help.focusNext
+local toggleWibarForTag  = help.toggleWibarForTag
 
-local Mod     = "Mod4"
-local Alt     = "Mod1"
-local Control = "Control"
-local Shift   = "Shift"
+local Mod                = "Mod4"
+local Alt                = "Mod1"
+local Control            = "Control"
+local Shift              = "Shift"
 
 local scripts_dir        = "~/.config/Scripts/"
 local scripts_cmd        = "sh " .. scripts_dir
@@ -34,15 +35,15 @@ local prompt_scripts_dir = scripts_dir .. "prompt_scripts/"
 local prompt_scripts_cmd = "sh " .. prompt_scripts_dir
 local awm_scripts_cmd    = "sh ~/.config/awesome/scripts/"
 
-local browser     = "brave"
-local screenshot  = "flameshot gui"
-local filemanager = "pcmanfm"
-local terminal    = "alacritty"
+local browser            = "firefox"
+local screenshot         = "flameshot gui"
+local filemanager        = "pcmanfm"
+local terminal           = "alacritty"
 
-local brightnessUpCmd = "brightnessctl -d ${BACKLIGHT_DEVICE} set +5%"
-local brightnessDown  = "brightnessctl -d ${BACKLIGHT_DEVICE} set 5%-"
+local brightnessUpCmd    = "brightnessctl -d ${BACKLIGHT_DEVICE} set +5%"
+local brightnessDown     = "brightnessctl -d ${BACKLIGHT_DEVICE} set 5%-"
 
-local lockCommand = "dm-tool switch-to-greeter"
+local lockCommand        = "dm-tool switch-to-greeter"
 
 
 local keymaps = {}
@@ -194,6 +195,13 @@ keymaps.globalkeys = gtable.join(
             beautiful.volume.change("toggle")
         end,
         { description = "Toggle Mute", group = "Control" }
+    ),
+
+    awful.key(
+        { Mod }, "F12", function()
+            awful.spawn.with_shell(scripts_cmd .. "ocr.sh")
+        end,
+        { description = "OCR on clipboard image" }
     ),
 
     ----appvolume-----
@@ -372,9 +380,9 @@ keymaps.globalkeys = gtable.join(
     ),
 
     awful.key({ Mod }, "-", function()
-        local s = awful.screen.focused();
-        s.systray.visible = not s.systray.visible
-    end,
+            local s = awful.screen.focused();
+            s.systray.visible = not s.systray.visible
+        end,
         { description = "Toggle systray visibility", group = "Awesome" }
     ),
 
@@ -662,7 +670,6 @@ keymaps.clientkeys = gtable.join(
         end,
         { description = "toggle fullscreen", group = "Client" }
     ),
-
 
     awful.key(
         { Mod }, "c", function(c)
